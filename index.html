@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❤️ Для моей любимой ❤️</title>
+    <style>
+        /* ===== БАЗА ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(15px);
+            border-radius: 60px;
+            padding: 40px 30px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        /* ===== АНИМИРОВАННЫЙ ФОН (пузырьки) ===== */
+        .bubbles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(255, 45, 85, 0.08);
+            border-radius: 50%;
+            animation: rise 12s infinite ease-in;
+        }
+        .bubble:nth-child(1) { width: 60px; height: 60px; left: 10%; animation-duration: 14s; }
+        .bubble:nth-child(2) { width: 100px; height: 100px; left: 30%; animation-duration: 18s; animation-delay: 2s; }
+        .bubble:nth-child(3) { width: 80px; height: 80px; left: 55%; animation-duration: 16s; animation-delay: 4s; }
+        .bubble:nth-child(4) { width: 120px; height: 120px; left: 75%; animation-duration: 20s; animation-delay: 1s; }
+        .bubble:nth-child(5) { width: 50px; height: 50px; left: 90%; animation-duration: 13s; animation-delay: 3s; }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(0.8); opacity: 0.5; }
+            100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+        }
+
+        /* ===== КОНТЕНТ ===== */
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            color: #ff2d55;
+            font-size: 2.8em;
+            margin-bottom: 5px;
+            text-shadow: 0 4px 20px rgba(255, 45, 85, 0.2);
+        }
+        .subtitle {
+            font-size: 1.2em;
+            color: #555;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .player-wrapper {
+            margin: 15px 0 20px;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        .counter {
+            font-size: 1.6em;
+            font-weight: 700;
+            background: rgba(255, 45, 85, 0.08);
+            padding: 14px 20px;
+            border-radius: 60px;
+            margin: 15px 0;
+        }
+        .counter span {
+            color: #ff2d55;
+            font-size: 1.8em;
+        }
+        button {
+            background: #ff2d55;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: white;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(255, 45, 85, 0.35);
+            transition: all 0.25s ease;
+            margin: 8px 5px;
+        }
+        button:hover {
+            transform: scale(1.05);
+            background: #e61e45;
+            box-shadow: 0 12px 40px rgba(255, 45, 85, 0.5);
+        }
+        .love-message {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #ff2d55;
+            min-height: 70px;
+            margin: 10px 0;
+        }
+        /* ===== ГАЛЕРЕЯ ===== */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .gallery img {
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            border: 3px solid white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.05) rotate(-2deg);
+            box-shadow: 0 12px 35px rgba(255, 45, 85, 0.3);
+        }
+        /* ===== КНОПКИ НАВИГАЦИИ ===== */
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        .nav-buttons button {
+            background: #9b9b9b;
+            box-shadow: none;
+            padding: 12px 25px;
+            font-size: 0.95em;
+            flex: 1 1 auto;
+            min-width: 100px;
+        }
+        .nav-buttons button.primary {
+            background: #ff2d55;
+            box-shadow: 0 6px 25px rgba(255, 45, 85, 0.25);
+        }
+        .nav-buttons button.primary:hover {
+            background: #e61e45;
+        }
+        /* ===== СТРАНИЦЫ ===== */
+        .page {
+            display: none;
+            animation: fadeSlide 0.5s ease;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeSlide {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        /* ===== АДАПТАЦИЯ ===== */
+        @media (max-width: 550px) {
+            .container { padding: 20px 15px; }
+            h1 { font-size: 2em; }
+            .counter { font-size: 1.2em; }
+            .gallery img { width: 100px; height: 100px; }
+            button { padding: 14px 25px; font-size: 1em; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Пузырьки фона -->
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <div class="content">
+        <!-- ===== СТРАНИЦА 1: ГЛАВНАЯ ===== -->
+        <div class="page active" id="page-main">
+            <h1>❤️ Для тебя ❤️</h1>
+            <p class="subtitle">Ты — лучшее, что случалось со мной</p>
+
+            <div class="player-wrapper">
+                <iframe 
+                    width="100%" 
+                    height="166" 
+                    scrolling="no" 
+                    frameborder="no" 
+                    allow="autoplay; encrypted-media" 
+                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2132114875&color=%23ff2d55&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"
+                    style="border-radius: 30px; border: none;">
+                </iframe>
+            </div>
+
+            <div class="counter">
+                Мы вместе уже <span id="days">0</span> дней ❤️
+            </div>
+
+            <button onclick="showLove()">Нажми, если любишь</button>
+            <p id="message" class="love-message"></p>
+
+            <div class="nav-buttons">
+                <button class="primary" onclick="showPage('page-gallery')">📸 Фото</button>
+                <button class="primary" onclick="surprise()">🎉 Сюрприз</button>
+            </div>
+        </div>
+
+        <!-- ===== СТРАНИЦА 2: ГАЛЕРЕЯ ===== -->
+        <div class="page" id="page-gallery">
+            <h1>📸 Наши моменты</h1>
+            <p class="subtitle">Каждое фото — как маленькое приключение</p>
+            <div class="gallery" id="gallery-container"></div>
+            <div class="nav-buttons">
+                <button onclick="showPage('page-main')">🏠 Назад</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ===========================================
+    // 1. СЧЁТЧИК ДНЕЙ (ПОМЕНЯЙ ДАТУ НА СВОЮ!)
+    // ===========================================
+    const startDate = new Date('2026-02-22'); // ГГГГ-ММ-ДД
+
+    function updateDays() {
+        const today = new Date();
+        const diff = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+        document.getElementById('days').textContent = diff >= 0 ? diff : 0;
+    }
+    updateDays();
+
+    // ===========================================
+    // 2. КНОПКА ЛЮБВИ + СЕРДЕЧКИ
+    // ===========================================
+    function showLove() {
+        const msg = document.getElementById('message');
+        msg.innerHTML = 'Я ТОЖЕ ТЕБЯ ЛЮБЛЮ! ❤️';
+        msg.style.transform = 'scale(1.2)';
+        setTimeout(() => msg.style.transform = 'scale(1)', 300);
+
+        for (let i = 0; i < 30; i++) {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.style.cssText = `
+                position: fixed;
+                left: ${Math.random() * 100}vw;
+                top: -10vh;
+                font-size: ${20 + Math.random() * 40}px;
+                pointer-events: none;
+                z-index: 9999;
+                animation: fall ${2 + Math.random() * 3}s linear forwards;
+            `;
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+    }
+
+    // ===========================================
+    // 3. СЮРПРИЗ (КОНФЕТТИ)
+    // ===========================================
+    function surprise() {
+        const colors = ['#ff2d55', '#ff9a9e', '#fbc2eb', '#ffd1ff', '#a1c4fd', '#ff6b6b'];
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.style.cssText = `
+                position: fixed;
+                left: ${Math.random() * 100}vw;
+                top: -10vh;
+                width: ${6 + Math.random() * 10}px;
+                height: ${6 + Math.random() * 10}px;
+                background: ${colors[Math.floor(Math.random() * colors.length)]};
+                border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+                pointer-events: none;
+                z-index: 9999;
+                animation: confettiFall ${2 + Math.random() * 3}s linear forwards;
+                transform: rotate(${Math.random() * 360}deg);
+            `;
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 5000);
+        }
+    }
+
+    // ===========================================
+    // 4. АНИМАЦИИ (ДОБАВЛЯЕМ ДИНАМИЧЕСКИ)
+    // ===========================================
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = `
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(${Math.random() * 720}deg); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(styleSheet);
+
+    // ===========================================
+    // 5. ГАЛЕРЕЯ (ЗАМЕНИ ССЫЛКИ НА СВОИ ФОТО)
+    // ===========================================
+    let galleryLoaded = false;
+
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        if (pageId === 'page-gallery' && !galleryLoaded) loadGallery();
+    }
+
+    function loadGallery() {
+        const container = document.getElementById('gallery-container');
+        const photos = [
+            
+            'https://wertigo.ru/shared-files/b628c422-bc22-41fc-b7d9-c70932f87a99'    // ЗАМЕНИ НА СВОЁ
+        ];
+
+        container.innerHTML = '';
+        photos.forEach(src => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = 'Наше фото';
+            img.onclick = () => window.open(src, '_blank');
+            container.appendChild(img);
+        });
+        galleryLoaded = true;
+    }
+
+    // ===========================================
+    // 6. ЗАГРУЗКА ПРИ СТАРТЕ
+    // ===========================================
+    console.log('❤️ Сайт любви запущен!');
+</script>
+</body>
+</html>
