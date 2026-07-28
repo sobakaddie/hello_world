@@ -1,5 +1,5 @@
 // Дата начала отношений (ПОМЕНЯЙ НА СВОЮ!)
-const startDate = new Date('2025-01-01');
+const startDate = new Date('2026-02-22');
 
 function updateDays() {
     const today = new Date();
